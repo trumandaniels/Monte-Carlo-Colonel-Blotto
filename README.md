@@ -1,6 +1,6 @@
 # Understanding Fantasy Basketball with Game Theory
 ## Introduction
-Although not as well known as Fantasy Football, Fantasy Basketball is an engaging game for fans to play during the NBA season. All fantasy sports use a real sport as a data source (for basketball this means how many points, assists, steals, turnovers etc. are accumulated), and then use that data to compete against other in-league teams every week. The following is part white paper, part guide to winning. It is the first attempt I'm aware of that uses Blotto games as a model for Fantasy Basketball as well as the first attempt I'm aware of finding a dominant Blotto strategy using random strategies. https://www.semanticscholar.org/paper/%E2%80%9C-Solving-%E2%80%9D-the-Blotto-Game-%3A-A-Computational-Wittman/241ba18a3819a3341ef091eb99b10dc510f28ef0 this paper compares a selection of pre-defined strategies.
+Although not as well known as Fantasy Football, Fantasy Basketball is an engaging game for fans to play during the NBA season. All fantasy sports use a real sport as a data source (for basketball this means how many points, assists, steals, turnovers etc. are accumulated), and then use that data to compete against other in-league teams every week. The following is part white paper, part guide to winning, part documentation of the code. It is the first attempt I'm aware of that uses Blotto games as a model for Fantasy Basketball as well as the first attempt I'm aware of finding a dominant Blotto strategy using random strategies. https://www.semanticscholar.org/paper/%E2%80%9C-Solving-%E2%80%9D-the-Blotto-Game-%3A-A-Computational-Wittman/241ba18a3819a3341ef091eb99b10dc510f28ef0 this paper compares a selection of pre-defined strategies.
 
 ## How Fantasy Basketball is Played:
 At the start of the season, each person in a fantasy league picks a team (called drafting). Picking well in the draft is incredibly important for doing well during the season because the players available mid-season are not very good. Each week during the season, our team goes up against another team in our league in a head-to-head matchup. The winner of this head-to-head matchup is whichever team wins the most number of statistical categories. In a 9 category league, you need to win at least 5 categories to win that week. Those categories are Points, Rebounds, Blocks, Assists, Steals, Turnovers (lower is better), 3-point shots made (3PM), Free Throw % (higher is better), and Field Goal % (higher is better). The more games you win, the higher seeded you are for the playoffs (and the easier your fantasy championship run is).
@@ -47,7 +47,8 @@ I've built a way to test different distributions (also called strategies) by sim
 
 Here's a short explanation of each function:
 note: parameters are in italics
-#### gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
+
+### gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
  
 Description: 
   
@@ -56,7 +57,7 @@ Parameters:
    
 Output: 9 item list of ints or floats
  
-#### gen_blotto_tuple(*number_of_strategies*, *use_integers*=True)
+### gen_blotto_tuple(*number_of_strategies*, *use_integers*=True)
  Description: generates a tuple with a bunch of random strategies
   
  Parameters:
@@ -65,7 +66,7 @@ Output: 9 item list of ints or floats
 
  Output: (s1, s2, s3, ... , sX)
   
-#### single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True)
+### single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True)
  
  Description: This test determines the win % of a given (or random) strategy 
  
@@ -81,9 +82,22 @@ Output: 9 item list of ints or floats
   
 #### best_test(*nstrategies*, *nopponents*, *use_ints*=True, *fast*=True, *show*=10, *show_var*=True, *return_list*=None)
 
- Description: Figures out
+ Description: Tries out *nstrategies*, each against *nopponents* to find the best one.
  
- Fast: algorithm is improved speed-wise by comparing vs the same list of opponents
+ Parameters:
+  - *nstrategies* ~ The number of strategies you want to test 
+  - *nopponents* ~ The number of opponents you want your strategy to be tested against 
+  - *use_ints* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
+  - *fast* ~ if fast=True, algorithm is improved speed-wise by comparing vs the same list of opponents
+  - *show* ~ if return_list=False, best_test prints the top *show* strats
+  - *return_list* ~ if True, the function returns a list, if False, it prints that list 
+  - *show_var* ~ Used for making the graph comparing variance with win %
+  
+ Output:
+  a list of the strats by win % or None (printing the top *show* strats)
+  
+## Results
+
 
 Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find a Google Colab version of my code here: 
 https://colab.research.google.com/drive/1LsDSJjSjAm6-GpNWeZaUOzb9emaiseXA
