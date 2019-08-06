@@ -23,40 +23,51 @@ We can use Game Theory to model this situation. A model in this context is just 
 
 If we think about player value being Colonel Blotto game, we can simulate a bunch of games against other strategies and try to find the best distribution for our model. 
 
-The setup of a Blotto game is simple: two colonels are fighting a war with equal sized armies. But each of those armies has to be split across different areas called “battlefields”. For example each colonel has 100 troops distributed across 5 battlefields. If a colonel has more troops on a battlefield than the other colonel, that colonel wins that battlefield with their size majority, and if they win more battlefields than the other colonel they win the war. For example, if colonel 1 had 10 troops deployed across battlefields 1-5 as [1, 2, 4, 2, 1] against colonel 2’s troop distribution of [2, 0, 0, 3, 5]: 1<2, 2>0, 4>0, 2<3, 1<5, so colonel 2 wins 3 battlefields and colonel 1’s only wins 2 battlefields, so colonel 2 wins the war. In a more visually understandable way:
+The setup of a Blotto game is simple: two colonels are fighting a war with equal sized armies. Each army is split across different areas called “battlefields”. For example each colonel has 100 troops distributed across 5 battlefields. If a colonel has more troops on a battlefield than the other colonel, that colonel wins that battlefield with their size majority, and if they win more battlefields than the other colonel they win the war. For example, if colonel 1 had 10 troops deployed across battlefields 1-5 as [1, 2, 4, 2, 1] against colonel 2’s troop distribution of [2, 0, 0, 3, 5]: 1<2, 2>0, 4>0, 2<3, 1<5, so colonel 2 wins 3 battlefields and colonel 1’s only wins 2 battlefields, so colonel 2 wins the war. In a more visually understandable way:
   ```
-  [1] < [2]
-  [2] > [0]
-  [4] > [0]
-  [2] < [3]
-  [1] < [5]
+  Col 1 | Col 2
+    [1] < [2]
+    [2] > [0]
+    [4] > [0]
+    [2] < [3]
+    [1] < [5]
   
-  Total:
-  2 > 3
+  Battlefield Totals:
+  2 < 3
+  
+  Troop Totals:
+  10 = 10
   ```
-This theoretical game has no dominant strategy, because if a colonel adjusts their troops before battle, there will always be a strategy that the opposing colonel can change to that will beat them. Almost every strategy has a situation where except for a strategy that puts 0 troops into more than half the number of battlefields e.g. [10, 0, 0, 0, 0] or [0, 0, 0, 5, 5] because those will always lose. Assuming no prior information about the opposing colonel’s choices, there isn’t a dominant strategy.
+This theoretical game has no "best" strategy defined by Game Theory, because if a colonel adjusts their troops before battle, there will always be a strategy that the opposing colonel can change to that will beat them. The Blotto game solution is cyclical. Almost every strategy has a situation where except for a strategy that puts 0 troops into more than half the number of battlefields e.g. [10, 0, 0, 0, 0] or [0, 0, 0, 5, 5] because those will always lose. Assuming no prior information about the opposing colonel’s choices, there isn’t a dominant strategy.
+
+If instead we assume opposing colonels play random strategies, we can find the best strategies using a Monte Carlo simulation.
 
 ## Solving using Monte Carlo Simulation:
-I've built a way to test different distributions (also called strategies).
+I've built a way to test different distributions (also called strategies) by simulating them battling against one another.
 
 Here's a short explanation of each function:
 note: parameters are in italics
- 1. gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
-  - Parameters:
-   - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
- 
- 2. gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple sized *number_of_strategies*
+ gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
   
   Parameters:
-  -*number_of_strategies* ~
+   - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
  
- 3. single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True):
+ gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple with a bunch of random strategies
+  
   Parameters:
+   - *number_of_strategies* ~ The number of strategies you want in your tuple
+   - *use_integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
+ 
+ single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True):
+  
+  Parameters:
+   - *nopponents* ~ The number of opponents you want your 
+   - *use_integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
+   - 
 
 
 
-
-Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find an interactive version of my code here: 
+Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find a Google Colab version of my code here: 
 https://colab.research.google.com/drive/1LsDSJjSjAm6-GpNWeZaUOzb9emaiseXA
 
 
