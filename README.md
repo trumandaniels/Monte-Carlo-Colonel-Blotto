@@ -37,7 +37,13 @@ The setup of a Blotto game is simple: two colonels are fighting a war with equal
 This theoretical game has no dominant strategy, because if a colonel adjusts their troops before battle, there will always be a strategy that the opposing colonel can change to that will beat them. Almost every strategy has a situation where except for a strategy that puts 0 troops into more than half the number of battlefields e.g. [10, 0, 0, 0, 0] or [0, 0, 0, 5, 5] because those will always lose. Assuming no prior information about the opposing colonel’s choices, there isn’t a dominant strategy.
 
 ## Solving using Monte Carlo Simulation:
-We can use 
+I've built a way to test different distributions (also called strategies).
+
+Here's a short explanation of each function
+
+gen_random_blotto: generates a random strategy, for 9 battlefields
+
+
 
 Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find an interactive version of my code here: 
 https://colab.research.google.com/drive/1LsDSJjSjAm6-GpNWeZaUOzb9emaiseXA
