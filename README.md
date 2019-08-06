@@ -45,6 +45,8 @@ If instead we assume opposing colonels play random strategies, we can find the b
 ## Solving using Monte Carlo Simulation:
 I've built a way to test different distributions (also called strategies) by simulating them battling against one another.
 
+**-----If you're not interested in how the code works, feel free to skip the rest of this section-----**
+
 Here's a short explanation of each function:
 note: parameters are in italics
 
