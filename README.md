@@ -1,18 +1,18 @@
 # Understanding Fantasy Basketball with Game Theory
-## Setting Up The Rules Of The Game:
+## Introduction
 Although it's not as popular as Fantasy Football, Fantasy Basketball is an engaging game for fans to play during the NBA season. Fantasy sports use a real sport as a data source (for basketball this means how many points, assists, steals, turnovers etc. are accumulated). The following is a white paper of sorts. It is the first attempt I'm aware of that uses Blotto games as a model for Fantasy Basketball as well as the first attempt I'm aware of finding a dominant Blotto strategy by facing random strategies. https://www.semanticscholar.org/paper/%E2%80%9C-Solving-%E2%80%9D-the-Blotto-Game-%3A-A-Computational-Wittman/241ba18a3819a3341ef091eb99b10dc510f28ef0 this paper compares a selection of pre-defined strategies.
 
-At the start of the season, each person in a fantasy league picks a team (called drafting). Picking good players at the start is incredibly important for doing well during the season because the players available mid-season are not very good. Each week during the season, our team goes up against another team in our league in a head-to-head matchup. The winner of this head-to-head matchup is whichever team wins the most number of statistical categories. In a 9 category league, you need to win at least 5 categories to win that week. Those categories are Points, Rebounds, Blocks, Assists, Steals, Turnovers (lower is better), 3-point shots made (3PM), Free Throw % (higher is better), and Field Goal % (higher is better). The more games you win, the higher seeded you are for the playoffs (and the easier your fantasy championship run is).
+## Setting Up The Rules Of The Game:
+At the start of the season, each person in a fantasy league picks a team (called drafting). Picking well in the draft is incredibly important for doing well during the season because the players available mid-season are not very good. Each week during the season, our team goes up against another team in our league in a head-to-head matchup. The winner of this head-to-head matchup is whichever team wins the most number of statistical categories. In a 9 category league, you need to win at least 5 categories to win that week. Those categories are Points, Rebounds, Blocks, Assists, Steals, Turnovers (lower is better), 3-point shots made (3PM), Free Throw % (higher is better), and Field Goal % (higher is better). The more games you win, the higher seeded you are for the playoffs (and the easier your fantasy championship run is).
  
-## Understanding Relative Player Value
-
+## Figuring Out What a Good Player Looks Like
 Good NBA players help you win by contributing to each of the statistical categories (in various amounts). We need to develop a way to evaluate how good each player is for their position, and for all players before the season starts so that we can plan our draft.
 
 The first step is either creating player statistical projections with machine learning or using other projections (for the upcoming season). For example basketball-reference's projection system: https://www.basketball-reference.com/friv/projections.cgi
 
 The next step is turning the raw statistics into something comparable across categories. We can do this by figuring out the standard deviation of each category. A general but good metric for how much a player contributes to your team over the course of a season is to sum the standard deviations of all categories. Free Throw % and Field Goal % are more tricky because players who shoot a lot of free throws or who shoot a lot of field goals have a much larger impact on our weekly team %, so you need to scale those categories appropriately.
 
-There's one more element crutical for winnning the game: picking the right distribution.
+There's one more element crutical for winnning the game: picking the right team distribution across categories.
 
 A common strategy in fantasy basketball is called “punting” and it means to intentionally draft players who are bad at one or two categories in order to strenghen the rest of your categories. The idea is that because you only need to win five out of the nine categories to win a match, you should concentrate your player values. It is essentially letting your opponent try to win every category and concentrating on your strongest categories.
 
@@ -39,9 +39,11 @@ This theoretical game has no dominant strategy, because if a colonel adjusts the
 ## Solving using Monte Carlo Simulation:
 I've built a way to test different distributions (also called strategies).
 
-Here's a short explanation of each function
+Here's a short explanation of each function:
+note: parameters are in italics
+ * gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops (there's an option to allow parts of troops too)
+ * gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple sized *number_of_strategies*
 
-gen_random_blotto: generates a random strategy, for 9 battlefields
 
 
 
