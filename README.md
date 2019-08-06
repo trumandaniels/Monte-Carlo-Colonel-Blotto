@@ -47,22 +47,27 @@ I've built a way to test different distributions (also called strategies) by sim
 
 Here's a short explanation of each function:
 note: parameters are in italics
- gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
+ **gen_random_blotto**(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
+ 
+ Description: 
   
-  Parameters:
+ Parameters:
    - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
    
-  Output: 
+ Output: 9 item list of ints or floats
  
- gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple with a bunch of random strategies
+ **gen_blotto_tuple**(*number_of_strategies*, *use_integers*=True)
+  Description: generates a tuple with a bunch of random strategies
   
   Parameters:
    - *number_of_strategies* ~ The number of strategies you want in your tuple
    - *use_integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
  
-  Output: 
+  Output: (s1, s2, s3, ... , sX)
   
- single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True):
+ **single_test**(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True)
+ 
+  Description: 
   
   Parameters:
    - *nopponents* ~ The number of opponents you want your strategy to be tested against 
@@ -73,6 +78,12 @@ note: parameters are in italics
    
   Output:
    (How often *strategy* wins, *strategy*)
+   
+  **best_test**(*nstrategies*, *nopponents*, *use_ints*=True, *fast*=True, *show*=10, *show_var*=True, *return_list*=None)
+  
+  Description: Figures out
+  
+  Fast: algorithm is improved speed-wise by comparing vs the same list of opponents
 
 Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find a Google Colab version of my code here: 
 https://colab.research.google.com/drive/1LsDSJjSjAm6-GpNWeZaUOzb9emaiseXA
