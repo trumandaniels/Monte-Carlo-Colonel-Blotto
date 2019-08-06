@@ -41,8 +41,17 @@ I've built a way to test different distributions (also called strategies).
 
 Here's a short explanation of each function:
 note: parameters are in italics
- * gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops (there's an option to allow parts of troops too)
- * gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple sized *number_of_strategies*
+ 1. gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
+  - Parameters:
+   - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
+ 
+ 2. gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple sized *number_of_strategies*
+  
+  Parameters:
+  -*number_of_strategies* ~
+ 
+ 3. single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True):
+  Parameters:
 
 
 
