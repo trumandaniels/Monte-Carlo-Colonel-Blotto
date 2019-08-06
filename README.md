@@ -1,8 +1,8 @@
 # Understanding Fantasy Basketball with Game Theory
 ## Introduction
-Although it's not as popular as Fantasy Football, Fantasy Basketball is an engaging game for fans to play during the NBA season. Fantasy sports use a real sport as a data source (for basketball this means how many points, assists, steals, turnovers etc. are accumulated). The following is a white paper of sorts. It is the first attempt I'm aware of that uses Blotto games as a model for Fantasy Basketball as well as the first attempt I'm aware of finding a dominant Blotto strategy by facing random strategies. https://www.semanticscholar.org/paper/%E2%80%9C-Solving-%E2%80%9D-the-Blotto-Game-%3A-A-Computational-Wittman/241ba18a3819a3341ef091eb99b10dc510f28ef0 this paper compares a selection of pre-defined strategies.
+Although not as well known as Fantasy Football, Fantasy Basketball is an engaging game for fans to play during the NBA season. All fantasy sports use a real sport as a data source (for basketball this means how many points, assists, steals, turnovers etc. are accumulated), and then use that data to compete against other in-league teams every week. The following is part white paper, part guide to winning. It is the first attempt I'm aware of that uses Blotto games as a model for Fantasy Basketball as well as the first attempt I'm aware of finding a dominant Blotto strategy using random strategies. https://www.semanticscholar.org/paper/%E2%80%9C-Solving-%E2%80%9D-the-Blotto-Game-%3A-A-Computational-Wittman/241ba18a3819a3341ef091eb99b10dc510f28ef0 this paper compares a selection of pre-defined strategies.
 
-## Setting Up The Rules Of The Game:
+## How Fantasy Basketball is Played:
 At the start of the season, each person in a fantasy league picks a team (called drafting). Picking well in the draft is incredibly important for doing well during the season because the players available mid-season are not very good. Each week during the season, our team goes up against another team in our league in a head-to-head matchup. The winner of this head-to-head matchup is whichever team wins the most number of statistical categories. In a 9 category league, you need to win at least 5 categories to win that week. Those categories are Points, Rebounds, Blocks, Assists, Steals, Turnovers (lower is better), 3-point shots made (3PM), Free Throw % (higher is better), and Field Goal % (higher is better). The more games you win, the higher seeded you are for the playoffs (and the easier your fantasy championship run is).
  
 ## Figuring Out What a Good Player Looks Like
@@ -51,6 +51,8 @@ note: parameters are in italics
   
   Parameters:
    - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
+   
+  Output: 
  
  gen_blotto_tuple(*number_of_strategies*, *use_integers*=True): generates a tuple with a bunch of random strategies
   
@@ -58,14 +60,19 @@ note: parameters are in italics
    - *number_of_strategies* ~ The number of strategies you want in your tuple
    - *use_integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
  
+  Output: 
+  
  single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True):
   
   Parameters:
-   - *nopponents* ~ The number of opponents you want your 
+   - *nopponents* ~ The number of opponents you want your strategy to be tested against 
    - *use_integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
-   - 
-
-
+   - *strategy* ~ You can test a single strategy, if None this is random
+   - *pregenerated_list* ~ You can test against a list of strategies, if None the strategies tested against are random
+   - *show_var* ~ Used for making the graph comparing variance with win %
+   
+  Output:
+   (How often *strategy* wins, *strategy*)
 
 Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find a Google Colab version of my code here: 
 https://colab.research.google.com/drive/1LsDSJjSjAm6-GpNWeZaUOzb9emaiseXA
