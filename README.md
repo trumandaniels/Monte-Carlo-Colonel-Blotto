@@ -43,7 +43,9 @@ This theoretical game has no "best" strategy defined by Game Theory, because if 
 If instead we assume opposing colonels play random strategies, we can find the best strategies using a Monte Carlo simulation.
 
 ## Solving using Monte Carlo Simulation:
-I've built a way to test different distributions (also called strategies) by simulating them battling against one another.
+I've built a way to test different distributions (also called strategies) by simulating them battling against one another. By running this test, I started seeing a pattern.
+
+![test](blotto.png)
 
 **-----If you're not interested in how the code works, feel free to skip the rest of this section-----**
 
@@ -84,7 +86,7 @@ Output:
  Output:
   - (How often *strategy* wins, *strategy*)
   
-#### best_test(*nstrategies*, *nopponents*, *use_ints*=True, *fast*=True, *show*=10, *show_var*=True, *return_list*=None)
+### best_test(*nstrategies*, *nopponents*, *use_ints*=True, *fast*=True, *show*=10, *show_var*=True, *return_list*=None)
 
  Description: Tries out *nstrategies*, each against *nopponents* to find the best one.
  
