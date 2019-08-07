@@ -50,14 +50,15 @@ I've built a way to test different distributions (also called strategies) by sim
 Here's a short explanation of each function:
 note: parameters are in italics
 
-### gen_random_blotto(*integers*=True): generates a random strategy, for 9 battlefields with 100 troops
+### gen_random_blotto(*integers*=True): 
  
-Description: 
+Description: generates a random strategy, for 9 battlefields with 100 troops
   
 Parameters:
-  - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
+ - *integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
    
-Output: 9 item list of ints or floats
+Output: 
+ - 9 item list of ints or floats
  
 ### gen_blotto_tuple(*number_of_strategies*, *use_integers*=True)
  Description: generates a tuple with a bunch of random strategies
@@ -66,7 +67,8 @@ Output: 9 item list of ints or floats
   - *number_of_strategies* ~ The number of strategies you want in your tuple
   - *use_integers* ~ if True, the Troop values in each battlefield will be integers, if False, they are floats.
 
- Output: (s1, s2, s3, ... , sX)
+ Output: 
+  - (s1, s2, s3, ... , sX)
   
 ### single_test(*nopponents*, *use_integers*=True, *strategy*=None, *pregenerated_list*=None, *show_var*=True)
  
@@ -80,7 +82,7 @@ Output: 9 item list of ints or floats
   - *show_var* ~ Used for making the graph comparing variance with win %
   
  Output:
-  (How often *strategy* wins, *strategy*)
+  - (How often *strategy* wins, *strategy*)
   
 #### best_test(*nstrategies*, *nopponents*, *use_ints*=True, *fast*=True, *show*=10, *show_var*=True, *return_list*=None)
 
@@ -96,7 +98,7 @@ Output: 9 item list of ints or floats
   - *show_var* ~ Used for making the graph comparing variance with win %
   
  Output:
-  a list of the strats by win % or None (printing the top *show* strats)
+  - a list of the strats by win % or None (printing the top *show* strats)
   
 ## Results
 
