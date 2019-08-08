@@ -3,10 +3,10 @@
 Although not as well known as Fantasy Football, Fantasy Basketball is an fun game for fans to play during the NBA season. Fantasy sports use a real sport as a data source (for basketball this means how many points, assists, steals, turnovers etc. are accumulated), and then use that data to compete against other in-league teams every week. The following is part white paper, part guide to winning, and part documentation of the code. It is the first attempt I'm aware of that uses Blotto games as a model for Fantasy Basketball as well as the first attempt I'm aware of finding a dominant Blotto strategy against random strategies. [For the curious, this paper](https://www.semanticscholar.org/paper/%E2%80%9C-Solving-%E2%80%9D-the-Blotto-Game-%3A-A-Computational-Wittman/241ba18a3819a3341ef091eb99b10dc510f28ef0) does something similar, but against a selection of pre-defined strategies.
 
 ## How Fantasy Basketball is Played:
-At the start of the season, each person in a fantasy league picks a team (called drafting). Picking well in the draft is incredibly important for doing well during the season because the players available mid-season are not very good. Each week during the season, our team goes up against another team in our league in a head-to-head matchup. The winner of this head-to-head matchup is whichever team wins the most number of statistical categories. In a 9 category league, you need to win at least 5 categories to win that week. Those categories are Points, Rebounds, Blocks, Assists, Steals, Turnovers (lower is better), 3-point shots made (3PM), Free Throw % (higher is better), and Field Goal % (higher is better). The more games you win, the higher seeded you are for the playoffs (and the easier your fantasy championship run is).
+At the start of the season, each person in a fantasy league picks a team (called drafting). Picking well in the draft is incredibly important for doing well during the season because the players available mid-season are not very good. Each week during the season, our team goes up against another team in our league in a head-to-head matchup. The winner of this head-to-head matchup is whichever team wins the most number of statistical categories. In a 9 category league, this means you need to win at least 5 categories to win that week. Those categories are Points, Rebounds, Blocks, Assists, Steals, Turnovers (lower is better), 3-point shots made (3PM), Free Throw % (higher is better), and Field Goal % (higher is better). The more weeks you win, the better. 
  
 ## Figuring Out What a Good Player Looks Like
-Good NBA players help you win by contributing to each of the statistical categories (in various amounts). We need to develop a way to evaluate how good each player is for their position, and for all players before the season starts so that we can plan our draft.
+Good NBA players help our team win by contributing to each of the statistical categories (in various amounts). We need to develop a way to evaluate how good each player is before the season starts so that we can plan our draft.
 
 The first step is either creating player statistical projections with machine learning or using other projections (for the upcoming season). For example [basketball-reference's projection system](https://www.basketball-reference.com/friv/projections.cgi).
 
@@ -14,16 +14,18 @@ The next step is turning the raw statistics into something comparable across cat
 
 There's one more element crutical for winnning the game: picking the right team distribution across categories.
 
-A common strategy in fantasy basketball is called “punting” and it means to intentionally draft players who are bad at one or two categories in order to strenghen the rest of your categories. The idea is that because you only need to win five out of the nine categories to win a match, you should concentrate your player values. It is essentially letting your opponent try to win every category and concentrating on your strongest categories.
+A common strategy in fantasy basketball is called “punting” and it means to intentionally draft players who are bad at one or two categories but are strong in other areas. You can read more about [punting here](https://www.rotoballer.com/how-to-punt-categories-in-fantasy-basketball/538425).
 
-But how can we evaluate if this is even a good strategy?
+Punting is a common strategy, but how can we evaluate if this is even a good strategy?
 
 ## Using Game Theory to Model the Situation:
-We can use Game Theory to model this situation. A model in this context is just simplified version of reality that lets us. 
+We can use game theory to model this situation. A model is just simplified version of reality that lets us make predictions and gives us some insight.
 
-If we think about player value being Colonel Blotto game, we can simulate a bunch of games against other strategies and try to find the best distribution for our model. 
+In classical game theory there is something called a Blotto game that shares some characteristics with Fantasy Basketball.
 
-The setup of a Blotto game is simple: two colonels are fighting a war with equal sized armies. Each army is split across different areas called “battlefields”. For example each colonel has 100 troops distributed across 5 battlefields. If a colonel has more troops on a battlefield than the other colonel, that colonel wins that battlefield with their size majority, and if they win more battlefields than the other colonel they win the war. For example, if colonel 1 had 10 troops deployed across battlefields 1-5 as [1, 2, 4, 2, 1] against colonel 2’s troop distribution of [2, 0, 0, 3, 5]: 1<2, 2>0, 4>0, 2<3, 1<5, so colonel 2 wins 3 battlefields and colonel 1’s only wins 2 battlefields, so colonel 2 wins the war. In a more visually understandable way:
+The setup of a Blotto game is simple: two colonels are fighting a war with equal sized armies. Each army is split across different areas called “battlefields”. If a colonel has more troops on a battlefield than the other colonel, that colonel wins that battlefield with their size majority, and if they win more battlefields than the other colonel they win the war. 
+
+For example, if colonel 1 had 10 troops deployed across battlefields 1-5 as [1, 2, 4, 2, 1] against colonel 2’s troop distribution of [2, 0, 0, 3, 5]: 1<2, 2>0, 4>0, 2<3, 1<5, so colonel 2 wins 3 battlefields and colonel 1’s only wins 2 battlefields, so colonel 2 wins the war. In a more visually understandable way:
   ```
   Col 1 | Col 2
     [1] < [2]
@@ -38,16 +40,16 @@ The setup of a Blotto game is simple: two colonels are fighting a war with equal
   Troop Totals:
   10 = 10
   ```
-This theoretical game has no "best" strategy defined by Game Theory, because if a colonel adjusts their troops before battle, there will always be a strategy that the opposing colonel can change to that will beat them. The Blotto game solution is cyclical. Almost every strategy has a situation where except for a strategy that puts 0 troops into more than half the number of battlefields e.g. [10, 0, 0, 0, 0] or [0, 0, 0, 5, 5] because those will always lose. Assuming no prior information about the opposing colonel’s choices, there isn’t a dominant strategy.
+This theoretical game has no "best" strategy defined by Game Theory, because if a colonel adjusts their troops before battle, there will always be a strategy that the opposing colonel can change to that will beat them. The Blotto game solution is cyclical. Almost every strategy is viable except for a strategy that puts 0 troops into more than half the number of battlefields e.g. [10, 0, 0, 0, 0] or [0, 0, 0, 5, 5] because those will always lose. Assuming no prior information about the opposing colonel’s choices, there isn’t a dominant strategy.
 
 If instead we assume opposing colonels play random strategies, we can find the best strategies using a Monte Carlo simulation.
 
-## Solving using Monte Carlo Simulation:
-I've built a way to test how different distributions perform (also called strategies) by simulating them battling against one another. You can see how this pattern plays out below
+## Solving With Monte Carlo Simulation:
+When we graph the variance of troop distribution across battlefields, We see how this plays out below
 
 ![Graph](blotto.png)
 
-The better strategies perform, the higher they are on the Y-axis
+Basically, the less variance, the better. The ideal distribution is having each battlefield with the same number of troops.
 
 ### -----If you're not interested in how the code works, feel free to skip the rest of this section----- 
 
@@ -104,12 +106,8 @@ Output:
  Output:
   - a list of the strats by win % or None (printing the top *show* strats)
   
-## Results
-
-
-Summary: I used Blotto games and a Monte Carlo algorithm to optimize fantasy basketball strategy. You can find a Google Colab version of my code here: 
+You can find a Google Colab version of my code here: 
 https://colab.research.google.com/drive/1LsDSJjSjAm6-GpNWeZaUOzb9emaiseXA
-
 
 ## Big Takeaway
 All else being equal, having your players' categorical strengths spread across all your categories is better than having them concentrated in only some categories.
